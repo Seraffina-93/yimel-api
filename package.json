@@ -1,0 +1,23 @@
+{
+  "name": "proyecto-correo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "1.18.3",
+    "cors": "2.8.5",
+    "express": "4.16.4",
+    "joi": "14.0.6",
+    "jwt-simple": "0.5.5",
+    "md5": "2.2.1",
+    "moment": "2.22.2",
+    "mongoose": "5.3.11",
+    "nodemon": "1.18.6"
+  }
+}
