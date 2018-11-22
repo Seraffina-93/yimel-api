@@ -14,7 +14,7 @@ const schemaSendMessage = () => {
 const sendMessage = async (message) => {
   try {
     message.emailFromId = await new ObjectID(message.emailFromId)
-    // message.emailToId = await new ObjectID(message.emailToId)
+    
     message.emailToId = message.emailToId.map((data) => {
       return new ObjectID(data)
     })
