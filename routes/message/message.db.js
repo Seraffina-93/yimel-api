@@ -10,6 +10,18 @@ const insertMessage = async (data) => {
   }
 }
 
+const findAll = async (emailFromId) => {
+  try {
+    const query = { emailFromId }
+    const message = await Message.find(query)
+
+    return message
+  } catch(e) {
+    throw e
+  }
+}
+
 module.exports = {
-  insertMessage
+  insertMessage,
+  findAll
 }

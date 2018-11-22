@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { ObjectID } = require('mongodb')
-const { insertMessage } = require('./message.db')
+const { insertMessage, findAll } = require('./message.db')
 
 const schemaSendMessage = () => {
   return {
@@ -14,7 +14,7 @@ const schemaSendMessage = () => {
 const sendMessage = async (message) => {
   try {
     message.emailFromId = await new ObjectID(message.emailFromId)
-    
+
     message.emailToId = message.emailToId.map((data) => {
       return new ObjectID(data)
     })
@@ -27,7 +27,18 @@ const sendMessage = async (message) => {
   }
 }
 
+const getAllMessages = async (userId) => {
+  try {
+    const messages = await findAll(userId)
+
+    return messages
+  } catch(e) {
+    throw e
+  }
+}
+
 module.exports = {
   sendMessage,
-  schemaSendMessage
+  schemaSendMessage,
+  getAllMessages
 }

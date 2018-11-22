@@ -15,8 +15,9 @@ const createToken = (_id) => {
 const decodeToken = (token) => {
   return new Promise((resolve, reject) => {
     try {
-      jwt.decode(token, SECRET_TOKEN)
-      resolve()
+      const result = jwt.decode(token, SECRET_TOKEN)
+      
+      resolve(result)
     } catch(e) {
       reject({ message: 'El token ha expirado' })
     }
