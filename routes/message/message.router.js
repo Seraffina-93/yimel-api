@@ -6,14 +6,19 @@ const { decodeToken } = require('../../utils/token')
 module.exports = (router) => {
   router.post('/message', isAuth, validateSchema({ body: schemaSendMessage }), async (req, res) => {
     try {
+      const { authorization } = req.headers
+      const token = authorization.split(' ')[1]
+      const tokenDecoded = await decodeToken(token)
+      const userId = tokenDecoded.sub
+
       const { body } = req
-      const message = await sendMessage(body)
+      const message = await sendMessage(body, userId)
       const status = 200
   
       res.status(status).send(message)
     } catch(e) {
       const { message, error } = e
-      console.log(error)
+      console.log(e)
       res.send(400, { message })
     }
   })

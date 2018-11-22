@@ -1,4 +1,5 @@
 const Message = require('../../models/message')
+const User = require('../../models/user')
 
 const insertMessage = async (data) => {
   try {
@@ -21,7 +22,19 @@ const findAll = async (emailFromId) => {
   }
 }
 
+const findByEmail = async (email) => {
+  try {
+    const query = { email }
+    const user = await User.findOne(query)
+
+    return user
+  } catch(e) {
+    throw e
+  }
+}
+
 module.exports = {
   insertMessage,
+  findByEmail,
   findAll
 }
