@@ -1,6 +1,16 @@
 const { findUser } = require('./login.db')
 const { createToken } = require('../../utils/token')
 const md5 = require('md5')
+const Joi = require('joi')
+
+const schemaLogin = () => {
+  return {
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string().required()
+  }
+}
 
 const login = async (body) => {
   try {
@@ -30,5 +40,6 @@ const login = async (body) => {
 }
 
 module.exports = {
-	login
+  schemaLogin,
+  login
 }

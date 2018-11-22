@@ -1,12 +1,12 @@
-const { sendMessage } = require('./message.controller')
+const { sendMessage, schemaSendMessage } = require('./message.controller')
 const isAuth = require('../../middleware/auth')
+const { validateSchema } = require('../../middleware/validate')
 
 module.exports = (router) => {
-  router.post('/message', isAuth, async (req, res) => {
+  router.post('/message', isAuth, validateSchema({ body: schemaSendMessage }), async (req, res) => {
     try {
       const { body } = req
-      // const message = await sendMessage(body)
-      const message = { message: 'exito'}
+      const message = await sendMessage(body)
       const status = 200
   
       res.status(status).send(message)

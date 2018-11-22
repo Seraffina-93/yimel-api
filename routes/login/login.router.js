@@ -1,7 +1,8 @@
-const { login } = require('./login.controller')
+const { login, schemaLogin } = require('./login.controller')
+const { validateSchema } = require('../../middleware/validate')
 
 module.exports = (router) => {
-  router.post('/login', async (req, res) => {
+  router.post('/login', validateSchema({ body: schemaLogin }), async (req, res) => {
     try {
       const { body } = req
       const logged = await login(body)
@@ -12,5 +13,5 @@ module.exports = (router) => {
     } catch(e) {
       res.status(400).send({ message: 'Error login' })
     }
-  });
+  })
 }

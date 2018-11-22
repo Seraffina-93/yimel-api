@@ -1,28 +1,33 @@
 const Joi = require('joi')
+const { ObjectID } = require('mongodb')
+const { insertMessage } = require('./message.db')
 
-const validateMessage = (message) => {
+const schemaSendMessage = () => {
   return {
-    name: Joi.string().required(),
-    email: Joi.string()
-      .email()
-      .required(),
-    message: Joi.string().required()
+    subject: Joi.string().required(),
+    message: Joi.string().required(),
+    emailFromId: Joi.string().required(),
+    emailToId: Joi.array(),
   }
 }
 
-
 const sendMessage = async (message) => {
   try {
-    const mess2 = 'Mensaje enviado'
+    message.emailFromId = await new ObjectID(message.emailFromId)
+    // message.emailToId = await new ObjectID(message.emailToId)
+    message.emailToId = message.emailToId.map((data) => {
+      return new ObjectID(data)
+    })
+    console.log('message: ', message)
+    await insertMessage(message)
 
-// {subject: req.body.subject, message: req.body.message, id_sender: req.body.id_sender, message_date: new Date()}, (err, result) => {
-
-    resolve({ mess2 })
+    return { message: 'Mensaje enviado'}
   } catch(e) {
-    reject(e)
+    throw e
   }
 }
 
 module.exports = {
-  sendMessage
+  sendMessage,
+  schemaSendMessage
 }
