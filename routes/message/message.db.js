@@ -11,9 +11,9 @@ const insertMessage = async (data) => {
   }
 }
 
-const findAll = async (emailFromId) => {
+const findAll = async (emailToId) => {
   try {
-    const query = { emailFromId }
+    const query = { emailToId }
     const message = await Message.find(query)
 
     return message

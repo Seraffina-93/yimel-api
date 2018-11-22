@@ -6,18 +6,20 @@ const schemaSendMessage = () => {
   return {
     subject: Joi.string().required(),
     message: Joi.string().required(),
-    emailFromId: Joi.string().required(),
-    emailTo: Joi.string(),
+    emailTo: Joi.string().required(),
   }
 }
 
 const sendMessage = async (message, userId) => {
   try {
-    message.emailFromId = await new ObjectID(userId)
+    message.emailFromId = userId
 
     const userTo = await findByEmail(message.emailTo)
+    if(!userTo)
+      throw { message: 'No existe el usuario a enviar', error: null }
+
     message.emailToId = userTo._id
-    
+
     delete message['emailTo'];
     await insertMessage(message)
 

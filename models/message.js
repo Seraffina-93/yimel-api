@@ -7,7 +7,7 @@ const MessageSchema = new Schema({
   message: String,
   emailFromId: ObjectId,
   createdAt: { type: Date, default: Date.now },
-  emailToId: [ObjectId],
+  emailToId: String,
 }, {
   versionKey: false
 })
